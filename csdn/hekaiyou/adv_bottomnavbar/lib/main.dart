@@ -2,6 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'navigation_icon_view.dart';
 
+void main() {
+  runApp(
+    new MaterialApp(
+      title: 'Botnavbar',
+      home: new BottomNav(),
+    )
+  );
+}
+
 class BottomNav extends StatefulWidget {
   @override
     BottomNavState createState() {
@@ -21,9 +30,15 @@ class BottomNavState extends State<BottomNav> with TickerProviderStateMixin{
       transitions.add(view.transition(_type, context));
     }
     transitions.sort((FadeTransition a, FadeTransition b) {
-      final Animation<double> aAnimation = a.listenable;
-      final Animation<double> bAnimation = b.listenable;
+      final Animation<double> aAnimation = a.opacity;
+      final Animation<double> bAnimation = b.opacity;
+      double aValue = aAnimation.value;
+      double bValue = bAnimation.value;
+
+      return aValue.compareTo(bValue);
     });
+
+    return new Stack(children: transitions);
   }
 
   void rebuild() {
@@ -85,6 +100,21 @@ class BottomNavState extends State<BottomNav> with TickerProviderStateMixin{
   @override
     Widget build(BuildContext context) {
       // TODO: implement build
+      final BottomNavigationBar botnavbar = new BottomNavigationBar(
+        items: _navigationViews.map((NavigationIconView navigationiconview) {
+          return navigationiconview.item;
+        }).toList(),
+        currentIndex: _currentIndex,
+        type: _type,
+        onTap: (int index) {
+          setState(() {
+            _navigationViews[_currentIndex].controller.reverse();
+            _currentIndex = index;
+            _navigationViews[_currentIndex].controller.forward();
+          });
+        },
+      );
+
       return new Scaffold(
         appBar: new AppBar(
           title: new Text('Bottom Navigation'),
@@ -92,12 +122,28 @@ class BottomNavState extends State<BottomNav> with TickerProviderStateMixin{
             new PopupMenuButton<BottomNavigationBarType>(
               onSelected: (BottomNavigationBarType value) {
                 setState(() {
-                  
+                  _type = value;            
                 });
+              },
+              itemBuilder: (BuildContext context) {
+                return <PopupMenuItem<BottomNavigationBarType>>[
+                  new PopupMenuItem<BottomNavigationBarType>(
+                    value: BottomNavigationBarType.fixed,
+                    child: new Text('Fixed'),
+                  ),
+                  new PopupMenuItem<BottomNavigationBarType>(
+                    value: BottomNavigationBarType.shifting,
+                    child: new Text('Shifting'),
+                  ),
+                ];
               },
             )
           ],
         ),
+        body: new Center(
+          child: _buildTransitionsStack(),
+        ),
+        bottomNavigationBar: botnavbar,
       );
     }
 }
