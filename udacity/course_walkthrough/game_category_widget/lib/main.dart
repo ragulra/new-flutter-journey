@@ -19,7 +19,11 @@ class Home extends StatelessWidget {
       return new Scaffold(
         backgroundColor: Colors.teal,
         body: new Center(
-          child: new GameCategory()
+          child: new GameCategory(
+            name: 'PUBG Mobile',
+            icon: Icons.gamepad,
+            color: Colors.purple,
+          )
         ),
       );
     }
