@@ -7,6 +7,10 @@ import 'model/data.dart';
 import 'model/product.dart';
 
 class HomePage extends StatelessWidget {
+  final Category category;
+
+  const HomePage({this.category: Category.all});
+
   List<Card> _buildGridCards(BuildContext context) {
     List<Product> products = getProducts(Category.all);
 
@@ -65,38 +69,6 @@ class HomePage extends StatelessWidget {
   @override
     Widget build(BuildContext context) {
       // TODO: implement build
-      return Scaffold(
-        appBar: AppBar(
-          brightness: Brightness.light,
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {
-              print('Menu Button');
-            },
-          ),
-          title: Text('SHRINE'),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                print('Filter Button');
-              },
-            ),
-            IconButton(
-              icon: Icon(Icons.tune),
-              onPressed: () {
-                print('Filter Button');
-              },
-            )
-          ],
-        ),
-        // body: GridView.count(
-        //   crossAxisCount: 2,
-        //   padding: EdgeInsets.all(16.0),
-        //   childAspectRatio: 8.0 / 9.0,
-        //   children: _buildGridCards(context)
-        // )
-        body: AsymmtericView(products: getProducts(Category.all)),
-      );
+      return AsymmtericView(products: getProducts(category));
     }
 }

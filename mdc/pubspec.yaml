@@ -31,6 +31,7 @@ flutter:
     - assets/diamond.png
     - assets/diamond2.png
     - assets/diamond3.png
+    - assets/slanted_menu.png
     - packages/shrine_images/0-0.jpg
     - packages/shrine_images/1-0.jpg
     - packages/shrine_images/2-0.jpg

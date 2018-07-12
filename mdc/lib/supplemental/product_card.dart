@@ -7,7 +7,7 @@ class ProductCard extends StatelessWidget {
   final double imageAspectRatio;
   final Product product;
 
-  ProductCard({this.imageAspectRatio: 33/49, this.product})
+  ProductCard({this.imageAspectRatio: 33 / 49, this.product})
     : assert(imageAspectRatio == null || imageAspectRatio > 0);
 
   static final kTextBoxHeight = 65.0;

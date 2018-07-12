@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 
-
+import 'model/product.dart';
+import 'backdrop.dart';
 import 'supplemental/cut_corner_borders.dart';
 import 'colors.dart';
 import 'home.dart';
 import 'login.dart';
+import 'category_menu_page.dart';
 
 final ThemeData _kShrineTheme = _buildShrineTheme();
 
@@ -49,29 +51,50 @@ TextTheme _buildShrineTextTheme(TextTheme base) {
   );
 }
 
-class ShrineApp extends StatelessWidget {
-
-  Route<dynamic> _getRoute(RouteSettings settings) {
-    if (settings.name != '/login') {
-      return null;
-    }
-
-    return MaterialPageRoute<void>(
-      settings: settings,
-      builder: (BuildContext context) => LoginPage(),
-      fullscreenDialog: true
-    );
-  }
-
+class ShrineApp extends StatefulWidget {
   @override
-    Widget build(BuildContext context) {
-      // TODO: implement build
-      return MaterialApp(
-        title: 'Shrine',
-        home: HomePage(),
-        initialRoute: '/login',
-        onGenerateRoute: _getRoute,
-        theme: _kShrineTheme,
+    _ShrineAppState createState() => _ShrineAppState();
+}
+
+class _ShrineAppState extends State<ShrineApp> {
+    Category _currentCategory = Category.all;
+
+    void _onCategoryTap(Category category) {
+      setState(() {
+        _currentCategory = category;
+      });
+    }
+    Route<dynamic> _getRoute(RouteSettings settings) {
+      if (settings.name != '/login') {
+        return null;
+      }
+
+      return MaterialPageRoute<void>(
+        settings: settings,
+        builder: (BuildContext context) => LoginPage(),
+        fullscreenDialog: true
       );
     }
+
+    @override
+      Widget build(BuildContext context) {
+        // TODO: implement build
+        return MaterialApp(
+          title: 'Shrine',
+          // home: HomePage(),
+          home: Backdrop(
+            currentCategory: _currentCategory,
+            frontLayer: HomePage(category: _currentCategory),
+            backLayer: CategoryMenuPage(
+              currentCategory: _currentCategory,
+              onCategoryTap: _onCategoryTap,
+            ),
+            frontTitle: Text('SHRINE'),
+            backTitle: Text('MENU'),
+          ),
+          initialRoute: '/login',
+          onGenerateRoute: _getRoute,
+          theme: _kShrineTheme,
+        );
+      }
 }
