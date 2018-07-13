@@ -53,7 +53,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  MapView mapview = MapView();
+  MapView mapview = new MapView();
   var compositeSubscription = CompositeSubscription();
 
   @override
