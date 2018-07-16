@@ -194,24 +194,86 @@ class MovieItem extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Row(mainAxisAlignment: MainAxisAlignment.start, 
-              children: <Widget>[ Text('Title: '), Flexible(child:Text(title))]),
-              Row(mainAxisAlignment: MainAxisAlignment.start, 
-              children: <Widget>[ Text('Year: '), Text(year)]),
-              Row(mainAxisAlignment: MainAxisAlignment.start, 
-              children: <Widget>[ Text('Released: '), Text(released)]),
-              Row(mainAxisAlignment: MainAxisAlignment.start, 
-              children: <Widget>[ Text('Genre: '), Flexible(child:Text(genre))]),
-              Row(mainAxisAlignment: MainAxisAlignment.start, 
-              children: <Widget>[ Text('Writer: '), Flexible(child:Text(writer))]),
-              Row(mainAxisAlignment: MainAxisAlignment.start, 
-              children: <Widget>[ Text('Contry: '), Text(country)]),
-              Row(mainAxisAlignment: MainAxisAlignment.start, 
-              children: <Widget>[ Text('Director: '), Flexible(child:Text(director))]),
-              Row(mainAxisAlignment: MainAxisAlignment.start, 
-              children: <Widget>[ Text('Actors: '), Flexible(child:Text(actors))]),
-              Row(mainAxisAlignment: MainAxisAlignment.start, 
-              children: <Widget>[ Text('Plot: '), Flexible(child:Text(plot))]),
+              Row(crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('Title: ',
+                 style: TextStyle(
+                   fontWeight: FontWeight.bold
+                 )
+                ),
+                new Padding(padding: const EdgeInsets.only(right: 4.0)),
+                Flexible(child:Text(title))]
+              ),
+              Row(crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('Year: ',
+                 style: TextStyle(
+                   fontWeight: FontWeight.bold
+                 )
+                ), 
+                new Padding(padding: const EdgeInsets.only(right: 4.0)),
+                Flexible(child:Text(year))]
+              ),
+              Row(crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('Released: ',
+                 style: TextStyle(
+                   fontWeight: FontWeight.bold
+                 )
+                ), 
+                new Padding(padding: const EdgeInsets.only(right: 4.0)),
+                Flexible(child:Text(released))]
+              ),
+              Row(crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('Genre: ',
+                 style: TextStyle(
+                   fontWeight: FontWeight.bold
+                 )
+                ), 
+                new Padding(padding: const EdgeInsets.only(right: 4.0)),
+                Flexible(child:Text(genre))]
+              ),
+              Row(crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('Country: ',
+                 style: TextStyle(
+                   fontWeight: FontWeight.bold
+                 )
+                ), 
+                new Padding(padding: const EdgeInsets.only(right: 4.0)),
+                Flexible(child:Text(country))]
+              ),
+              Row(crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Text('Director: ',
+                 style: TextStyle(
+                   fontWeight: FontWeight.bold
+                 )
+                ), 
+                new Padding(padding: const EdgeInsets.only(right: 4.0)),
+                Flexible(child:Text(director))]
+              ),
+              Row(crossAxisAlignment: CrossAxisAlignment.start, 
+              children: <Widget>[
+                Text('Actors: ',
+                 style: TextStyle(
+                   fontWeight: FontWeight.bold
+                 )
+                ), 
+                new Padding(padding: const EdgeInsets.only(right: 4.0)),
+                Flexible(child:Text(actors))]
+              ),
+              Row(crossAxisAlignment: CrossAxisAlignment.start, 
+              children: <Widget>[
+                Text('Plot: ',
+                 style: TextStyle(
+                   fontWeight: FontWeight.bold
+                 )
+                ), 
+                new Padding(padding: const EdgeInsets.only(right: 4.0)),
+                Flexible(child:Text(plot))]
+              ),
             ],
           ),
         ),
