@@ -37,6 +37,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   StreamController<Movie> streamController;
   List<Movie> movies = [];
+  bool switchWidget = false;
 
   load(StreamController controller) async {
     var client = http.Client();
@@ -94,6 +95,42 @@ class _HomeScreenState extends State<HomeScreen> {
       load(streamController);
     }
 
+  Widget _makeHorizontalElement(int index) {
+    if (index > movies.length) {
+      return null;
+    }
+
+    return Container(
+      margin: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
+      width: 250.0,
+      decoration: BoxDecoration(
+        color: Theme.of(context).cardColor,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Text(
+            movies[index].title,
+            style: TextStyle(
+              fontWeight: FontWeight.w900,
+              fontSize: 18.0
+            ),
+          ),
+          Padding(padding: const EdgeInsets.only(bottom: 4.0)),
+          Image.network(data['imageUrl']+movies[index].imageUrl, height: 250.0),
+          Padding(padding: const EdgeInsets.only(bottom: 4.0)),
+          Text(
+            movies[index].overview,
+            textAlign: TextAlign.justify,
+          ),
+          Padding(padding: const EdgeInsets.only(bottom: 8.0)),
+          Text('Release Date: '+movies[index].releaseDate)
+        ],
+      ),
+    );
+  }
+
   Widget _makeElement(int index) {
     if (index > movies.length) {
       return null;
@@ -133,6 +170,21 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Widget verticalWidget() {
+    return ListView.builder(
+      itemBuilder: (BuildContext context, int index) => _makeElement(index),
+      itemCount: movies.length,
+    );
+  }
+
+  Widget horizontalWidget() {
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      itemBuilder: (BuildContext context, int index) => _makeHorizontalElement(index),
+      itemCount: movies.length,
+    );
+  }
+
   @override
     Widget build(BuildContext context) {
       // TODO: implement build
@@ -140,12 +192,7 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           title: Text('Now Playing Movie'),
         ),
-        body: ListView.builder(
-          itemBuilder: (BuildContext context, int index) {
-            return _makeElement(index);
-          },
-          itemCount: movies.length,
-        ),
+        body: switchWidget ? horizontalWidget() : verticalWidget(),
         // Column(
         //   children: <Widget>[
         //     Flexible(
@@ -184,6 +231,19 @@ class _HomeScreenState extends State<HomeScreen> {
         //   },
         //   child: Icon(Icons.refresh),
         // ),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            setState(() {
+              switchWidget = switchWidget ? false : true;
+              // if (switchWidget == true) {
+              //   switchWidget = false;
+              // } else {
+              //   switchWidget = true;
+              // }
+            });
+          },
+          child: Icon(Icons.refresh),
+        ),
       );
     }
 }
