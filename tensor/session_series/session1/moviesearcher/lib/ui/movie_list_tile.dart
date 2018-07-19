@@ -20,6 +20,7 @@ class MovieTileList extends StatelessWidget {
         color: Colors.white,
         elevation: 5.0,
         child: Stack(
+          fit: StackFit.expand,
           children: <Widget>[
             Image(
               image: NetworkImageWithRetry(
