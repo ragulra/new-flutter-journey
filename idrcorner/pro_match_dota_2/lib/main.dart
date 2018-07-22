@@ -45,11 +45,71 @@ class _HomeState extends State<Home> {
       this._getMatch();
     }
 
+  Widget _matchItem2(int index) {
+    var format = DateFormat("d M y");
+    String secondEpochTimeStamp = dataMatch[index]['start_time'].toString() + "000";
+    int timestamp = int.parse(secondEpochTimeStamp);
+
+    return Container(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: <Widget>[
+          Text('ID: '+dataMatch[index]['match_id'].toString()),
+          Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Text('Team Name'),
+                  Text('Score')
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      Text('Radiant'),
+                      Text('Dire'),
+                    ],
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Text(dataMatch[index]['radiant_name'] == null ? 'Unknown Team Name' : dataMatch[index]['radiant_name']),
+                      Text(dataMatch[index]['dire_name'] == null ? 'Unknown Team Name' : dataMatch[index]['dire_name']),
+                    ],
+                  )
+                ],
+              )
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: <Widget>[
+              //     Text('Radiant'),
+              //     Text(dataMatch[index]['radiant_name'] == null ? 'Unknown Team Name' : dataMatch[index]['radiant_name']),
+              //     Text(dataMatch[index]['radiant_score'].toString())
+              //   ],
+              // ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              //   children: <Widget>[
+              //     Text('Dire'),
+              //     Text(dataMatch[index]['dire_name'] == null ? 'Unknown Team Name' : dataMatch[index]['dire_name']),
+              //     Text(dataMatch[index]['dire_score'].toString())
+              //   ],
+              // )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
   Widget _matchItem(int index) {
     var format = DateFormat("d M y");
     String secondEpochTimeStamp = dataMatch[index]['start_time'].toString() + "000";
     int timestamp = int.parse(secondEpochTimeStamp);
-    print(timestamp);
+    //print(timestamp);
+    print(dataMatch[index]['radiant_name']);
 
     return Container(
       decoration: BoxDecoration(
@@ -72,7 +132,7 @@ class _HomeState extends State<Home> {
                     Row(
                       children: <Widget>[
                         Text('Radiant'),
-                        Text(dataMatch[index]['radiant_name'])
+                        Text(dataMatch[index]['radiant_name'] == null ? 'Unknown Team Name' : dataMatch[index]['radiant_name'])
                       ],
                     ),
                     Text(dataMatch[index]['radiant_score'].toString())
@@ -87,7 +147,7 @@ class _HomeState extends State<Home> {
                     Row(
                       children: <Widget>[
                         Text('Dire'),
-                        Flexible(child: Text(dataMatch[index]['dire_name']))
+                        Text(dataMatch[index]['radiant_name'] == null ? 'Unknown Team Name' : dataMatch[index]['radiant_name'])
                       ],
                     ),
                     Text(dataMatch[index]['dire_score'].toString())
@@ -117,7 +177,7 @@ class _HomeState extends State<Home> {
           title: Text('Pro Match Dota 2'),
         ),
         body: ListView.builder(
-          itemBuilder: (BuildContext context, int index) => _matchItem(index),
+          itemBuilder: (BuildContext context, int index) => _matchItem2(index),
           itemCount: dataMatch == null ? 0 : dataMatch.length,
         ),
       );
