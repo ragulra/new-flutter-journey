@@ -38,54 +38,65 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Random random = Random();
 
-  void _switchUser(
-    {String currentUser, 
-      String otherUser, 
-      String currentAvatar, 
-      String otherAvatar,
-      String currentUserTeam,
-     String otherUserTeam}) 
-    {
+  String currentUserName;
+  String currentUserTeamName;
+  String currentUserAvatar;
+  String currentUserAvatarFull;
+  String currentLastTimeMatch;
 
+  String otherUserName;
+  String otherUserTeamName;
+  String otherUserAvatar;
+  String otherUserAvatarFull;
+  String otherLastTimeMatch;
+
+  void _define() {
+    int currentUserIndex = random.nextInt(widget.randomPlayers.length);
+    int otherUserIndex = random.nextInt(widget.randomPlayers.length);
+    
+    currentUserName = widget.randomPlayers[currentUserIndex]['name'] != null ? widget.randomPlayers[currentUserIndex]['name'] : '';
+    currentUserTeamName = widget.randomPlayers[currentUserIndex]['team_name'] != null ? widget.randomPlayers[currentUserIndex]['team_name'] : '';
+    currentUserAvatar = widget.randomPlayers[currentUserIndex]['avatar'] != null ? widget.randomPlayers[currentUserIndex]['avatar'] : '';
+    currentUserAvatarFull = widget.randomPlayers[currentUserIndex]['avatarfull'] != null ? widget.randomPlayers[currentUserIndex]['avatarfull'] : '';
+    currentLastTimeMatch = widget.randomPlayers[currentUserIndex]['last_match_time'] != null ? widget.randomPlayers[currentUserIndex]['last_match_time'] : 'Not recorded.';
+
+    otherUserName = widget.randomPlayers[otherUserIndex]['name'] != null ? widget.randomPlayers[otherUserIndex]['name'] : '';
+    otherUserTeamName = widget.randomPlayers[otherUserIndex]['team_name'] != null ? widget.randomPlayers[otherUserIndex]['team_name'] : '';
+    otherUserAvatar = widget.randomPlayers[otherUserIndex]['avatar'] != null ? widget.randomPlayers[otherUserIndex]['avatar'] : '';
+    otherUserAvatarFull = widget.randomPlayers[otherUserIndex]['avatarfull'] != null ? widget.randomPlayers[otherUserIndex]['avatarfull'] : '';
+    otherLastTimeMatch = widget.randomPlayers[currentUserIndex]['last_match_time'] != null ? widget.randomPlayers[currentUserIndex]['last_match_time'] : 'Not recorded.';                
+  }
+
+  void _switchUser() {
+    print('overhere!');
     String backupTeamName;
     String backupAvatar;
     String backupName;
+    String backupLastTimeMatch;
 
     setState(() {
-      backupTeamName = currentUserTeam;
-      currentUserTeam = otherUserTeam;
-      otherUserTeam = backupTeamName;
+      backupLastTimeMatch = currentLastTimeMatch;
+      currentLastTimeMatch = otherLastTimeMatch;
+      otherLastTimeMatch = backupLastTimeMatch;
 
-      backupAvatar = currentAvatar;
-      currentAvatar = otherAvatar;
-      otherAvatar = backupAvatar;
+      backupTeamName = currentUserTeamName;
+      currentUserTeamName = otherUserTeamName;
+      otherUserTeamName = backupTeamName;
 
-      backupName = currentUser;
-      currentUser = otherUser;
-      otherUser = backupName;
+      backupAvatar = currentUserAvatarFull;
+      currentUserAvatarFull = otherUserAvatarFull;
+      otherUserAvatarFull = backupAvatar;
+
+      backupName = currentUserName;
+      currentUserName = otherUserName;
+      otherUserName = backupName;
     });
   }
 
   Widget drawerLayout(BuildContext context) {
-    Random random = Random();
-    int currentUserIndex = random.nextInt(widget.randomPlayers.length);
-    int otherUserIndex = random.nextInt(widget.randomPlayers.length);
     
-    String randomName = widget.randomPlayers[currentUserIndex]['name'];
-    String randomTeamName = widget.randomPlayers[currentUserIndex]['team_name'];
-    String randomAvatar = widget.randomPlayers[currentUserIndex]['avatar'];
-    String randomAvatarFull = widget.randomPlayers[currentUserIndex]['avatarfull'];
-
-    String currentUserName = randomName;
-    String currentUserTeamName = randomTeamName;
-    String currentUserAvatar = randomAvatar;
-    String currentUserAvatarFull = randomAvatarFull;
-
-    String otherUserName = randomName;
-    String otherUserTeamName = randomTeamName;
-    String otherUserAvatar = randomAvatar;
-
     return Drawer(
       child: ListView(
         children: <Widget>[
@@ -102,33 +113,36 @@ class _HomePageState extends State<HomePage> {
                         appBar: AppBar(
                           title: Text('Player Details'),
                         ),
-                        body: Container(
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                            border: Border.all(),
-                            borderRadius: BorderRadius.circular(12.0)
+                        body: Center(
+                          child: Container(
+                            padding: const EdgeInsets.all(8.0),
+                            height: MediaQuery.of(context).size.height * 0.5,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              border: Border.all(),
+                              borderRadius: BorderRadius.circular(12.0)
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: <Widget>[
+                                Image.network(currentUserAvatarFull),
+                                Padding(padding: const EdgeInsets.only(bottom: 10.0)),
+                                Text('Name : '+currentUserName),
+                                Text('Team Name : '+currentUserTeamName),
+                                Text('Last Match Time : '+currentLastTimeMatch)
+                              ],
+                            ),
                           ),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: <Widget>[
-                              Image.network(currentUserAvatarFull),
-                              Padding(padding: const EdgeInsets.only(bottom: 10.0)),
-                              Text('Name : '+currentUserName),
-                              Text('Team Name : '+currentUserTeamName),
-                              Text('Last Match Time : '+widget.randomPlayers[currentUserIndex]['last_match_time'] != null ?
-                                  widget.randomPlayers[currentUserIndex]['last_match_time'] :
-                                  'Not recorded.')
-                            ],
-                          ),
-                        ),
+                        )
                       );
                     }
                   )
                 );
               },
-              child: widget.randomPlayers[currentUserIndex]['avatar'] != null ?
+              child: currentUserAvatarFull != null ?
                 CircleAvatar(backgroundImage: NetworkImage(
-                  currentUserAvatar)) :
+                  currentUserAvatarFull)) :
                 CircleAvatar(backgroundColor: Color.fromRGBO(
                   random.nextInt(256),
                   random.nextInt(256),
@@ -142,18 +156,11 @@ class _HomePageState extends State<HomePage> {
             ),
             otherAccountsPictures: <Widget>[
               GestureDetector(
-                onTap: () => _switchUser(
-                  currentUser: currentUserName,
-                  currentAvatar: currentUserAvatar,
-                  currentUserTeam: currentUserTeamName,
-                  otherUser: otherUserName,
-                  otherAvatar: otherUserAvatar,
-                  otherUserTeam: otherUserTeamName
-                ),
+                onTap: () => _switchUser(),
                 child: CircleAvatar(
-                  child: widget.randomPlayers[otherUserIndex]['avatar'] != null ?
+                  child: otherUserAvatarFull != null ?
                     CircleAvatar(backgroundImage: NetworkImage(
-                      otherUserAvatar)) :
+                      otherUserAvatarFull)) :
                     CircleAvatar(backgroundColor: Color.fromRGBO(
                       random.nextInt(256),
                       random.nextInt(256),
@@ -163,11 +170,37 @@ class _HomePageState extends State<HomePage> {
                     ),
               )
             ],
+          ),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                this._define();
+              });
+            },
+            child: ListTile(
+              title: Text('Random The Player'),
+              trailing: Icon(Icons.person),
+            )
+          ),
+          ListTile(
+            title: Text('Settings'),
+            trailing: Icon(Icons.settings),
+          ),
+          ListTile(
+            title: Text('Close'),
+            trailing: Icon(Icons.close),
           )
         ],
       ),
     );
   }
+
+  @override
+    void initState() {
+      // TODO: implement initState
+      super.initState();
+      this._define();
+    }
 
   @override
     Widget build(BuildContext context) {
