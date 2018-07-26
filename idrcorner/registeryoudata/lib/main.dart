@@ -160,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Row(
             children: <Widget>[
               Text('Status : '),
+              Padding(padding: const EdgeInsets.only(right: 10.0)),
               DropdownButton(
                   onChanged: (String value) {
                     _chooseReligion(value);
@@ -175,6 +176,9 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Padding(padding: const EdgeInsets.only(bottom: 8.0)),
           RaisedButton.icon(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12.0)
+            ),
             onPressed: () => _showTheData(context),
             icon: Icon(Icons.send),
             label: Text('Send'),
