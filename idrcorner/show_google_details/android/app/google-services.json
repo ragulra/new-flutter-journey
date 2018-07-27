@@ -1,0 +1,99 @@
+{
+  "project_info": {
+    "project_number": "575245493433",
+    "firebase_url": "https://pro-player-dota-2.firebaseio.com",
+    "project_id": "pro-player-dota-2",
+    "storage_bucket": "pro-player-dota-2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575245493433:android:8d961f86b5f10c32",
+        "android_client_info": {
+          "package_name": "xyz.rasyidcode.prodota"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575245493433-a75n8cv61lisism93ott4pgd3ko5a09d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.rasyidcode.prodota",
+            "certificate_hash": "5040bd952faf9adc4dcdc5c5ca665437a6d53309"
+          }
+        },
+        {
+          "client_id": "575245493433-tr5oad2mfpstuf00klfjb226kmh4aujf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOinCwS8ziU6cStMJwPNRI-DXawJRuunI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575245493433-tr5oad2mfpstuf00klfjb226kmh4aujf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:575245493433:android:b96c7a07b6db5d66",
+        "android_client_info": {
+          "package_name": "xyz.rasyidcode.showgoogledetails"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "575245493433-hjru1jqle9lrvekp0psnb4f0uifkel81.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.rasyidcode.showgoogledetails",
+            "certificate_hash": "27d5576f041f98a05e898615d539f8ddd5b27fe2"
+          }
+        },
+        {
+          "client_id": "575245493433-tr5oad2mfpstuf00klfjb226kmh4aujf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDOinCwS8ziU6cStMJwPNRI-DXawJRuunI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "575245493433-tr5oad2mfpstuf00klfjb226kmh4aujf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
