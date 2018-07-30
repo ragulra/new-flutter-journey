@@ -70,6 +70,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
 
           animatedPageDragger.run();
         } else if (event.updateType == UpdateType.animating) {
+          print('ANIMATING.');
           slideDirection = event.direction;
           slidePercent = event.direction;
         } else if (event.updateType == UpdateType.doneAnimating) {
@@ -111,7 +112,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           PageDragger(
             canDragLeftToRight: activeIndex > 0,
             canDragRightToLeft: activeIndex < pages.length - 1,
-            slideUpdateStream: slideUpdateStream,
+            slideUpdateStream: this.slideUpdateStream,
           )
         ],
       ),

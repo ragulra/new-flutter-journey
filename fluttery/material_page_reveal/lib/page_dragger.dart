@@ -9,10 +9,11 @@ class PageDragger extends StatefulWidget {
   final bool canDragRightToLeft;
   final StreamController<SlideUpdate> slideUpdateStream;
 
-  PageDragger(
-      {this.canDragLeftToRight,
-      this.canDragRightToLeft,
-      this.slideUpdateStream});
+  PageDragger({
+    this.canDragLeftToRight,
+    this.canDragRightToLeft,
+    this.slideUpdateStream,
+  });
 
   _PageDraggerState createState() => _PageDraggerState();
 }
@@ -81,12 +82,13 @@ class AnimatedPageDragger {
 
   AnimationController completionAnimationController;
 
-  AnimatedPageDragger(
-      {this.slideDirection,
-      this.transitionGoal,
-      slidePercent,
-      StreamController<SlideUpdate> slideUpdateStream,
-      TickerProvider vsync}) {
+  AnimatedPageDragger({
+    this.slideDirection,
+    this.transitionGoal,
+    slidePercent,
+    StreamController<SlideUpdate> slideUpdateStream,
+    TickerProvider vsync,
+  }) {
     final startSlidePercent = slidePercent;
     var endSlidePercent;
     var duration;
@@ -130,6 +132,7 @@ class AnimatedPageDragger {
   }
 
   void run() {
+    print('it\'s running boi.');
     completionAnimationController.forward(from: 0.0);
   }
 
@@ -154,5 +157,9 @@ class SlideUpdate {
   final slidePercent;
   final updateType;
 
-  SlideUpdate({this.updateType, this.direction, this.slidePercent});
+  SlideUpdate({
+    this.updateType,
+    this.direction,
+    this.slidePercent,
+  });
 }
