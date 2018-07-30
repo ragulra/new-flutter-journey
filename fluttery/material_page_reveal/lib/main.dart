@@ -1,8 +1,10 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'page.dart';
 import 'page_reveal.dart';
 import 'page_indicator.dart';
+import 'page_dragger.dart';
 
 void main() {
   runApp(MaterialApp(
@@ -17,7 +19,71 @@ class HomePage extends StatefulWidget {
   _HomePageState createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
+  StreamController<SlideUpdate> slideUpdateStream;
+  AnimatedPageDragger animatedPageDragger;
+
+  int activeIndex = 0;
+  int nextPageIndex = 0;
+  SlideDirection slideDirection = SlideDirection.none;
+  double slidePercent = 0.0;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    slideUpdateStream = StreamController<SlideUpdate>();
+
+    slideUpdateStream.stream.listen((SlideUpdate event) {
+      setState(() {
+        if (event.updateType == UpdateType.dragging) {
+          slideDirection = event.direction;
+          slidePercent = event.slidePercent;
+          if (slideDirection == SlideDirection.leftToRight) {
+            nextPageIndex = activeIndex - 1;
+          } else if (slideDirection == SlideDirection.rightToLeft) {
+            nextPageIndex = activeIndex + 1;
+          } else {
+            nextPageIndex = activeIndex;
+          }
+        } else if (event.updateType == UpdateType.doneDragging) {
+          print('Done Dragging.');
+          if (slidePercent > 0.5) {
+            animatedPageDragger = AnimatedPageDragger(
+              slideDirection: slideDirection,
+              transitionGoal: TransitionGoal.open,
+              slidePercent: slidePercent,
+              slideUpdateStream: slideUpdateStream,
+              vsync: this,
+            );
+          } else {
+            animatedPageDragger = AnimatedPageDragger(
+              slideDirection: slideDirection,
+              transitionGoal: TransitionGoal.close,
+              slidePercent: slidePercent,
+              slideUpdateStream: slideUpdateStream,
+              vsync: this,
+            );
+
+            nextPageIndex = activeIndex;
+          }
+
+          animatedPageDragger.run();
+        } else if (event.updateType == UpdateType.animating) {
+          slideDirection = event.direction;
+          slidePercent = event.direction;
+        } else if (event.updateType == UpdateType.doneAnimating) {
+          print('Done Animating.');
+          activeIndex = nextPageIndex;
+          slideDirection = SlideDirection.none;
+          slidePercent = 0.0;
+
+          animatedPageDragger.dispose();
+        }
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
@@ -25,22 +91,27 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: <Widget>[
           Page(
-            viewModel: pages[0],
+            viewModel: pages[activeIndex],
             percentVisible: 1.0,
           ),
           PageReveal(
-              revealPercent: 1.0,
+              revealPercent: slidePercent,
               child: Page(
-                viewModel: pages[1],
-                percentVisible: 1.0,
+                viewModel: pages[nextPageIndex],
+                percentVisible: slidePercent,
               )),
           PageIndicator(
             viewModel: PagerIndicatorViewModel(
               pages: pages,
-              slideDirection: SlideDirection.leftToRight,
-              activeIndex: 1,
-              slidePercent: 0.0,
+              slideDirection: slideDirection,
+              activeIndex: activeIndex,
+              slidePercent: slidePercent,
             ),
+          ),
+          PageDragger(
+            canDragLeftToRight: activeIndex > 0,
+            canDragRightToLeft: activeIndex < pages.length - 1,
+            slideUpdateStream: slideUpdateStream,
           )
         ],
       ),
