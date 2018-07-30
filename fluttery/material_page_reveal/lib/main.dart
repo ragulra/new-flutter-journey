@@ -28,10 +28,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
   SlideDirection slideDirection = SlideDirection.none;
   double slidePercent = 0.0;
 
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
+  _HomePageState() {
     slideUpdateStream = StreamController<SlideUpdate>();
 
     slideUpdateStream.stream.listen((SlideUpdate event) {

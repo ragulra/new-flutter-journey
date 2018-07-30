@@ -47,20 +47,26 @@ class _PageDraggerState extends State<PageDragger> {
         slidePercent = 0.0;
       }
 
-      widget.slideUpdateStream.add(SlideUpdate(
+      widget.slideUpdateStream.add(
+        SlideUpdate(
           updateType: UpdateType.dragging,
           direction: slideDirection,
-          slidePercent: slidePercent));
+          slidePercent: slidePercent,
+        ),
+      );
 
       print('Dragging $slideDirection at $slidePercent%');
     }
   }
 
   void _onDragEnd(DragEndDetails details) {
-    widget.slideUpdateStream.add(SlideUpdate(
+    widget.slideUpdateStream.add(
+      SlideUpdate(
         updateType: UpdateType.doneDragging,
         slidePercent: 0.0,
-        direction: SlideDirection.none));
+        direction: SlideDirection.none,
+      ),
+    );
 
     dragStart = null;
   }
@@ -97,11 +103,13 @@ class AnimatedPageDragger {
       endSlidePercent = 1.0;
       final slideRemaining = 1.0 - slidePercent;
       duration = Duration(
-          milliseconds: (slideRemaining / PERCENT_PER_MILLISECOND).round());
+        milliseconds: (slideRemaining / PERCENT_PER_MILLISECOND).round(),
+      );
     } else {
       endSlidePercent = 0.0;
       duration = Duration(
-          milliseconds: (slidePercent / PERCENT_PER_MILLISECOND).round());
+        milliseconds: (slidePercent / PERCENT_PER_MILLISECOND).round(),
+      );
     }
 
     completionAnimationController =
@@ -112,11 +120,11 @@ class AnimatedPageDragger {
               endSlidePercent,
               completionAnimationController.value,
             );
-            SlideUpdate(
-              updateType: UpdateType.dragging,
+            slideUpdateStream.add(SlideUpdate(
+              updateType: UpdateType.animating,
               direction: slideDirection,
               slidePercent: slidePercent,
-            );
+            ));
           })
           ..addStatusListener((AnimationStatus status) {
             if (status == AnimationStatus.completed) {
@@ -132,7 +140,6 @@ class AnimatedPageDragger {
   }
 
   void run() {
-    print('it\'s running boi.');
     completionAnimationController.forward(from: 0.0);
   }
 
