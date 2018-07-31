@@ -83,7 +83,7 @@ class _FortniteHomeState extends State<FortniteHome>
         children: <Widget>[
           Pages(
             viewModel: pages[activeIndex],
-            percentVisible: 1.0,
+            percentVisible: 1.0, // actually it's #21
           ),
           PageReveal(
             revealPercent: slidePercent,
