@@ -10,6 +10,9 @@ void main() {
   runApp(MaterialApp(
     title: 'Material Page Reveal',
     debugShowCheckedModeBanner: false,
+    theme: ThemeData(
+      primaryColor: Colors.blue
+    ),
     home: HomePage(),
   ));
 }
@@ -69,7 +72,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
         } else if (event.updateType == UpdateType.animating) {
           print('ANIMATING.');
           slideDirection = event.direction;
-          slidePercent = event.direction;
+          slidePercent = event.slidePercent;
         } else if (event.updateType == UpdateType.doneAnimating) {
           print('Done Animating.');
           activeIndex = nextPageIndex;

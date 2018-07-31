@@ -112,31 +112,35 @@ class AnimatedPageDragger {
       );
     }
 
-    completionAnimationController =
-        AnimationController(duration: duration, vsync: vsync)
-          ..addListener(() {
-            slidePercent = ui.lerpDouble(
-              startSlidePercent,
-              endSlidePercent,
-              completionAnimationController.value,
-            );
-            slideUpdateStream.add(SlideUpdate(
-              updateType: UpdateType.animating,
+    completionAnimationController = AnimationController(
+      duration: duration,
+      vsync: vsync,
+    )
+      ..addListener(() {
+        slidePercent = ui.lerpDouble(
+          startSlidePercent,
+          endSlidePercent,
+          completionAnimationController.value,
+        );
+        slideUpdateStream.add(
+          SlideUpdate(
+            updateType: UpdateType.animating,
+            direction: slideDirection,
+            slidePercent: slidePercent,
+          ),
+        );
+      })
+      ..addStatusListener((AnimationStatus status) {
+        if (status == AnimationStatus.completed) {
+          slideUpdateStream.add(
+            SlideUpdate(
+              updateType: UpdateType.doneAnimating,
               direction: slideDirection,
-              slidePercent: slidePercent,
-            ));
-          })
-          ..addStatusListener((AnimationStatus status) {
-            if (status == AnimationStatus.completed) {
-              slideUpdateStream.add(
-                SlideUpdate(
-                  updateType: UpdateType.doneAnimating,
-                  direction: slideDirection,
-                  slidePercent: endSlidePercent,
-                ),
-              );
-            }
-          });
+              slidePercent: endSlidePercent,
+            ),
+          );
+        }
+      });
   }
 
   void run() {
