@@ -1,0 +1,8 @@
+- Cover 1 to 4 should be exists
+- Each cover contain each of this words:
+	- Cover 1. 'Free to Play' 'Once you downloaded the game you can start the game'
+	- Cover 2. 'Play with unique people' 'There is bunch of people plays dota and they are funny'
+	- Cover 3. 'Pick any hero you want' 'You can play along with any heroes you wanted'
+	- Cover 4. 'Say anything you want' 'LAKAD MATATAAG...NORMALIN NORMALIN...TANGINA MO..GG'
+- Have a Square animation transition
+- The active indicator should be dota 2 logo, previous indicator should be a circle and the next indicator should be square.
