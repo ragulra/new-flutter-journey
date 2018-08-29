@@ -107,7 +107,7 @@ class _IntroPageState extends State<IntroPage> with TickerProviderStateMixin {
               viewModel: pages[nextPageIndex],
             ),
             revealPercent: slidePercent,
-          ),
+          ), 
           PageIndicator(
             viewModel: PageIndicatorViewModel(
               activeIndex: activeIndex,
