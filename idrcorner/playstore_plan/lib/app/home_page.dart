@@ -92,7 +92,8 @@ class ListItem extends StatelessWidget {
       itemBuilder: (context, index) {
         color = random.nextInt(0xffffffff);
         return GestureDetector(
-          onLongPress: () => showAction(context, data[index]),
+          onLongPress: () =>
+              showAction(context, data[index], int.parse(data[index]['id'])),
           child: ListTile(
             leading: CircleAvatar(
               backgroundColor: Color(color),
@@ -110,46 +111,72 @@ class ListItem extends StatelessWidget {
     );
   }
 
-  Future showAction(BuildContext context, Map data) async {
+  Future deleteData(int index) async {
+    var url = 'http://192.168.1.9/playstore_plan/deletedata.php';
+    /* only comment */
+
+    http.post(
+      url,
+      body: {
+        'id': index.toString()
+      },
+    );
+  }
+
+  Future showAction(BuildContext context, Map data, int index) async {
     var dialog = await showDialog(
       context: context,
       builder: (context) {
         return SimpleDialog(
-          contentPadding: EdgeInsets.all(30.0),
-          title: Text('What you gonna do?'),
+          contentPadding: EdgeInsets.symmetric(horizontal: 50.0),
+          title: Text(
+            'What you gonna do?',
+            textAlign: TextAlign.center,
+          ),
           titlePadding: const EdgeInsets.symmetric(
             horizontal: 8.0,
             vertical: 4.0,
           ),
           children: <Widget>[
-            SimpleDialogOption(
+            FlatButton.icon(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12.0)),
               onPressed: () {
                 Navigator.pop(context, ACTION.delete);
               },
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: Text('DELETE'),
+              icon: Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+              label: Text(
+                'Delete',
+                style: TextStyle(color: Colors.red),
               ),
             ),
-            SimpleDialogOption(
+            FlatButton.icon(
               onPressed: () {
                 Navigator.pop(context, ACTION.edit);
               },
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: Text('EDIT'),
+              icon: Icon(
+                Icons.edit,
+                color: Colors.orange,
+              ),
+              label: Text(
+                'Edit',
+                style: TextStyle(color: Colors.orange),
               ),
             ),
-            SimpleDialogOption(
+            FlatButton.icon(
               onPressed: () {
                 Navigator.pop(context, ACTION.detail);
               },
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
-                child: Text('DETAIL'),
+              icon: Icon(
+                Icons.details,
+                color: Colors.green,
+              ),
+              label: Text(
+                'Detail',
+                style: TextStyle(color: Colors.green),
               ),
             ),
           ],
@@ -159,12 +186,13 @@ class ListItem extends StatelessWidget {
 
     switch (dialog) {
       case ACTION.delete:
-        print('delete');
+        deleteData(index);
         break;
       case ACTION.edit:
         print(data);
         Navigator.of(context).push(
-          MaterialPageRoute(builder: (context) => EditPage(data: data)),
+          MaterialPageRoute(
+              builder: (context) => EditPage(data: data, index: index)),
         );
         break;
       case ACTION.detail:

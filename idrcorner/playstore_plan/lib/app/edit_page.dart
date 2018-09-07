@@ -4,9 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 
 class EditPage extends StatefulWidget {
+  final int index;
   final Map data;
 
-  EditPage({@required this.data});
+  EditPage({@required this.data, this.index});
 
   @override
   _EditPageState createState() => _EditPageState();
@@ -163,12 +164,13 @@ class _EditPageState extends State<EditPage> {
   }
 
   Future _sendData() async {
-    var url = 'http://192.168.1.9/playstore_plan/adddata.php';
+    var url = 'http://192.168.1.9/playstore_plan/editdata.php';
     /* only comment */
 
     http.post(
       url,
       body: {
+        'id': widget.index.toString(),
         'app_name': _controllerAppName.text,
         'type': _type,
         'estimatedtime': _amountTime == 1
