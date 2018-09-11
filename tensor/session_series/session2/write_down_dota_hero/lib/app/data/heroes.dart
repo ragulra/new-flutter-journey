@@ -1,5 +1,5 @@
 class Heroes {
-  static const List<Map> data = [
+  static final List<Map> data = [
     {
       'hero_name': 'Anti Mage',
       'aka': 'am',
