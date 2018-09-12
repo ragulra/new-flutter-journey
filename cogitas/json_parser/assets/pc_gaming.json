@@ -1,0 +1,70 @@
+{
+    "data": [
+        {
+            "id": 1,
+            "name": "Acer Predator Orion 9000",
+            "brand": "Acer",
+            "specification": {
+                "processor": "Core i9-7980XE",
+                "video_card": "NVIDIA GTX 1080 Ti",
+                "ram": 8,
+                "hdd": 1000,
+                "ssd": 128
+            },
+            "price": 90000000
+        },
+        {
+            "id": 2,
+            "name": "ASUS ROG GT51 CH",
+            "brand": "Asus",
+            "specification": {
+                "processor": "Core i7 7700K ",
+                "video_card": "NVIDIA GTX 1080",
+                "ram": 16,
+                "hdd": 1000,
+                "ssd": 128
+            },
+            "price": 39000000
+        },
+        {
+            "id": 3,
+            "name": "MSI Vortex G25VR-8RD",
+            "brand": "MSI",
+            "specification": {
+                "processor": "Core i7-8700",
+                "video_card": "NVIDIA GTX 1060",
+                "ram": 16,
+                "hdd": 1000,
+                "ssd": 512
+            },
+            "price": 34000000
+        },
+        {
+            "id": 4,
+            "name": "Dell inspiron 5675 R7",
+            "brand": "Dell",
+            "specification": {
+                "processor": "AMD Ryzen 1700X",
+                "video_card": "NVIDIA GTX 1060",
+                "ram": 16,
+                "hdd": 1000,
+                "ssd": 256
+
+            },
+            "price": 23000000
+        },
+        {
+            "id": 5,
+            "name": "Acer Predator Orion 9000",
+            "brand": "Acer",
+            "specification": {
+                "processor": "Core i9-7980XE",
+                "video_card": "NVIDIA GTX 1080 Ti",
+                "ram": 8,
+                "hdd": 1000,
+                "ssd": 256
+            },
+            "price": 90000000
+        }
+    ]
+}
