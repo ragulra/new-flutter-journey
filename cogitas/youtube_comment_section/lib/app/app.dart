@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:youtube_comment_section/app/home_page.dart';
 
 class YoutubeCommentSectionApp extends StatelessWidget {
-  final List comments;
+  final String comments;
 
   YoutubeCommentSectionApp({@required this.comments});
   @override

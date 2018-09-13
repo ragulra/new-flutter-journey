@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 
@@ -12,9 +11,8 @@ void main() {
   });
 }
 
-Future<List> loadComments() async {
+Future<String> loadComments() async {
   var response = await http.get('https://jsonplaceholder.typicode.com/comments');
-  List data = json.decode(response.body);
 
-  return data;
+  return response.body;
 }
