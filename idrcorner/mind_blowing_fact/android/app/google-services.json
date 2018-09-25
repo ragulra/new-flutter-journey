@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "739622026857",
+    "firebase_url": "https://mind-blowing-fact.firebaseio.com",
+    "project_id": "mind-blowing-fact",
+    "storage_bucket": "mind-blowing-fact.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739622026857:android:271f8cfea46506df",
+        "android_client_info": {
+          "package_name": "xyz.rasyidcode.mindblowingfact"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739622026857-5ndavdum2our2mb65ipn59vtuaelnqek.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "xyz.rasyidcode.mindblowingfact",
+            "certificate_hash": "5040bd952faf9adc4dcdc5c5ca665437a6d53309"
+          }
+        },
+        {
+          "client_id": "739622026857-nm45spvko31m6jgae02dlgj3qur413i4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmWaYL6CrBXKRCmlzPrGUuiLssmdwLNFE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739622026857-nm45spvko31m6jgae02dlgj3qur413i4.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
