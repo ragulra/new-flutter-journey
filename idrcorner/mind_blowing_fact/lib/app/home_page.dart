@@ -12,25 +12,21 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         foregroundColor: Colors.white,
-        backgroundColor: Colors.purple,
+        backgroundColor: Theme.of(context).primaryColor,
         elevation: 0.0,
         onPressed: () {
           print('hello there');
         },
         child: Icon(Icons.add),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: BottomAppBar(
-        color: Colors.purple,
-        child: ButtonBar(
-          children: <Widget>[],
-        ),
-      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
         margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
         child: Column(
           children: <Widget>[
+            PostedItem(),
+            PostedItem(),
             PostedItem(),
             PostedItem(),
             PostedItem(),
@@ -60,7 +56,7 @@ class PostedItem extends StatelessWidget {
                     topLeft: Radius.circular(30.0),
                     bottomLeft: Radius.circular(30.0),
                   ),
-                  border: Border.all(width: 2.5)),
+                  border: Border.all(width: 2.5, color: Theme.of(context).primaryColor)),
               child: Text('Cat is never full.'),
             ),
             Container(
@@ -68,12 +64,68 @@ class PostedItem extends StatelessWidget {
               width: 40.0,
               height: 40.0,
               decoration: BoxDecoration(
-                  border: Border.all(width: 2.0),
+                  border: Border.all(width: 2.0, color: Theme.of(context).primaryColor),
                   color: Colors.red,
                   shape: BoxShape.circle),
               child: Center(child: Text('A')),
-            )
+            ),
           ],
+        ),
+        Container(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 10.0,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: Icon(Icons.thumb_up, size: 10.0),
+                  ),
+                  SizedBox(width: 3.0),
+                  Text(
+                    '2 Likes',
+                    style: TextStyle(
+                      fontSize: 10.0
+                    ),
+                  )
+                ],
+              ),
+              SizedBox(width: 5.0),
+              Row(
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 10.0,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: Icon(Icons.thumb_up, size: 10.0),
+                  ),
+                  SizedBox(width: 3.0),
+                  Text(
+                    '2 Likes',
+                    style: TextStyle(fontSize: 10.0),
+                  )
+                ],
+              ),
+              SizedBox(width: 5.0),
+              Row(
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 10.0,
+                    foregroundColor: Colors.white,
+                    backgroundColor: Theme.of(context).primaryColor,
+                    child: Icon(Icons.thumb_up, size: 10.0),
+                  ),
+                  SizedBox(width: 3.0),
+                  Text(
+                    '2 Likes',
+                    style: TextStyle(fontSize: 10.0),
+                  )
+                ],
+              ),
+            ],
+          ),
         ),
         SizedBox(height: 10.0)
       ],
