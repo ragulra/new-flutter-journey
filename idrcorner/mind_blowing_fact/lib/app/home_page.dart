@@ -1,134 +1,115 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+import 'package:mind_blowing_fact/app/post_dialog.dart';
+import 'package:mind_blowing_fact/app/post_item.dart';
+
 class HomePage extends StatefulWidget {
+  final FirebaseUser user;
+  final GoogleSignIn googleSignIn;
+
+  HomePage({@required this.user, @required this.googleSignIn});
+
   @override
   _HomePageState createState() => _HomePageState();
 }
 
 class _HomePageState extends State<HomePage> {
+  final TextEditingController postController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            Container(
+              decoration: BoxDecoration(
+                  color: Theme.of(context).primaryColor,
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(30.0),
+                      bottomRight: Radius.circular(30.0))),
+              width: double.infinity,
+              margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+              height: 200.0,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 50.0,
+                    backgroundImage: NetworkImage(widget.googleSignIn.currentUser.photoUrl),
+                  ),
+                  Column(
+                    children: <Widget>[
+                      Text(
+                        widget.googleSignIn.currentUser.displayName,
+                        style: TextStyle(
+                            fontFamily: 'JosefinSans', color: Colors.white),
+                      ),
+                      Text(
+                        widget.googleSignIn.currentUser.email,
+                        style: TextStyle(
+                          fontFamily: 'JosefinSans',
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            SizedBox(height: 15.0),
+            Container(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+              child: Column(
+                children: <Widget>[
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                  PostedItem(),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
         foregroundColor: Colors.white,
         backgroundColor: Theme.of(context).primaryColor,
-        elevation: 0.0,
+        elevation: 8.0,
         onPressed: () {
-          print('hello there');
+          showDialog(
+              context: context,
+              barrierDismissible: true,
+              builder: (context) {
+                return PostDialog(
+                  onFactPosted: () {
+
+                  },
+                  controller: postController,
+                );
+              });
         },
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      body: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-        margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
-        child: Column(
-          children: <Widget>[
-            PostedItem(),
-            PostedItem(),
-            PostedItem(),
-            PostedItem(),
-            PostedItem(),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class PostedItem extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    // TODO: implement build
-    return Column(
-      children: <Widget>[
-        Stack(
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.only(
-                  top: 8.0, left: 40.0, bottom: 8.0, right: 8.0),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0),
-                    topLeft: Radius.circular(30.0),
-                    bottomLeft: Radius.circular(30.0),
-                  ),
-                  border: Border.all(width: 2.5, color: Theme.of(context).primaryColor)),
-              child: Text('Cat is never full.'),
-            ),
-            Container(
-              padding: EdgeInsets.all(8.0),
-              width: 40.0,
-              height: 40.0,
-              decoration: BoxDecoration(
-                  border: Border.all(width: 2.0, color: Theme.of(context).primaryColor),
-                  color: Colors.red,
-                  shape: BoxShape.circle),
-              child: Center(child: Text('A')),
-            ),
-          ],
-        ),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 10.0,
-                    foregroundColor: Colors.white,
-                    backgroundColor: Theme.of(context).primaryColor,
-                    child: Icon(Icons.thumb_up, size: 10.0),
-                  ),
-                  SizedBox(width: 3.0),
-                  Text(
-                    '2 Likes',
-                    style: TextStyle(
-                      fontSize: 10.0
-                    ),
-                  )
-                ],
-              ),
-              SizedBox(width: 5.0),
-              Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 10.0,
-                    foregroundColor: Colors.white,
-                    backgroundColor: Theme.of(context).primaryColor,
-                    child: Icon(Icons.thumb_up, size: 10.0),
-                  ),
-                  SizedBox(width: 3.0),
-                  Text(
-                    '2 Likes',
-                    style: TextStyle(fontSize: 10.0),
-                  )
-                ],
-              ),
-              SizedBox(width: 5.0),
-              Row(
-                children: <Widget>[
-                  CircleAvatar(
-                    radius: 10.0,
-                    foregroundColor: Colors.white,
-                    backgroundColor: Theme.of(context).primaryColor,
-                    child: Icon(Icons.thumb_up, size: 10.0),
-                  ),
-                  SizedBox(width: 3.0),
-                  Text(
-                    '2 Likes',
-                    style: TextStyle(fontSize: 10.0),
-                  )
-                ],
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: 10.0)
-      ],
     );
   }
 }

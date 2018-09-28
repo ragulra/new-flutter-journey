@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:mind_blowing_fact/app/home_page.dart';
+import 'package:mind_blowing_fact/app/login_page.dart';
 
 class MindBlowingFactApp extends StatelessWidget {
   @override
@@ -10,9 +11,9 @@ class MindBlowingFactApp extends StatelessWidget {
         title: 'Mind Blowing Fact App',
         theme: ThemeData(
           primaryColor: Colors.teal,
-          accentColor: Colors.lightBlueAccent
+          accentColor: Color(0xfff0e68c),
         ),
-        home: HomePage(),
+        home: LoginPage(),
         debugShowCheckedModeBanner: false,
       );
     }
