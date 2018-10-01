@@ -18,18 +18,16 @@ class _LoginPageState extends State<LoginPage> {
 
   Future<Null> _signIn() async {
     GoogleSignInAccount googleSignInAccount = await googleSignIn.signIn();
+    GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
 
-    print(googleSignInAccount.email);
-    // GoogleSignInAuthentication googleSignInAuthentication = await googleSignInAccount.authentication;
+    FirebaseUser firebaseUser = await firebaseAuth.signInWithGoogle(
+      idToken: googleSignInAuthentication.idToken,
+      accessToken: googleSignInAuthentication.accessToken
+    );
 
-    // FirebaseUser firebaseUser = await firebaseAuth.signInWithGoogle(
-    //   idToken: googleSignInAuthentication.idToken,
-    //   accessToken: googleSignInAuthentication.accessToken
-    // );
-
-    // Navigator.of(context).push(MaterialPageRoute(
-    //   builder: (context) => HomePage(user: firebaseUser, googleSignIn: googleSignIn)
-    // ));
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (context) => HomePage(user: firebaseUser, googleSignIn: googleSignIn)
+    ));
   }
 
   @override
@@ -47,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
             SizedBox(height: 30.0),
             RaisedButton.icon(
-              color: Theme.of(context).accentColor,
+              // color: Theme.of(context).accentColor,
               onPressed: () => _signIn(),
               icon: Icon(Icons.input),
               label: Text(
