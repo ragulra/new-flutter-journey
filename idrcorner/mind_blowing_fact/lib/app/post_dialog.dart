@@ -33,7 +33,9 @@ class PostDialog extends StatelessWidget {
           color: Theme.of(context).primaryColor,
           disabledColor: Theme.of(context).accentColor,
           highlightColor: Colors.redAccent,
-          onPressed: () => onFactPosted,
+          onPressed: () {
+            onFactPosted();
+          },
           child: Text(
             'Share',
             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w900),

@@ -1,11 +1,35 @@
 import 'package:flutter/material.dart';
 
 class PostedItem extends StatelessWidget {
+  final String name;
+  final String imageUrl;
+  final int alikes;
+  final int adislikes;
+  final int acomments;
+  final String fact;
+
+  PostedItem({
+    @required this.name,
+    @required this.imageUrl,
+    @required this.alikes,
+    @required this.adislikes,
+    @required this.acomments,
+    @required this.fact,
+  });
+
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        Padding(
+          padding: const EdgeInsets.only(left: 10.0),
+          child: Text(
+            name,
+            style: TextStyle(fontWeight: FontWeight.w900),
+          ),
+        ),
         Stack(
           children: <Widget>[
             Container(
@@ -22,24 +46,15 @@ class PostedItem extends StatelessWidget {
                   border: Border.all(
                       width: 2.5, color: Theme.of(context).primaryColor)),
               child: Text(
-                'Cat is never full.',
+                fact,
                 textAlign: TextAlign.left,
-                style: TextStyle(
-                  fontSize: 12.0
-                ),
+                style: TextStyle(fontSize: 12.0),
               ),
             ),
-            Container(
-              padding: EdgeInsets.all(8.0),
-              width: 50.0,
-              height: 50.0,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      width: 2.0, color: Theme.of(context).primaryColor),
-                  color: Colors.red,
-                  shape: BoxShape.circle),
-              child: Center(child: Text('A')),
-            ),
+            CircleAvatar(
+              radius: 25.0,
+              backgroundImage: NetworkImage(imageUrl),
+            )
           ],
         ),
         SizedBox(height: 2.0),
@@ -57,7 +72,7 @@ class PostedItem extends StatelessWidget {
                   ),
                   SizedBox(width: 3.0),
                   Text(
-                    '2 likes',
+                    alikes.toString() + ' likes',
                     style: TextStyle(
                       fontSize: 10.0,
                       fontFamily: 'JosefinSans',
@@ -76,7 +91,7 @@ class PostedItem extends StatelessWidget {
                   ),
                   SizedBox(width: 3.0),
                   Text(
-                    '2 dislikes',
+                    adislikes.toString() + ' dislikes',
                     style: TextStyle(
                       fontSize: 10.0,
                       fontFamily: 'JosefinSans',
@@ -95,9 +110,9 @@ class PostedItem extends StatelessWidget {
                   ),
                   SizedBox(width: 3.0),
                   Text(
-                    '2 comments',
+                    acomments.toString() + ' comments',
                     style: TextStyle(
-                      fontSize: 10.0, 
+                      fontSize: 10.0,
                       fontFamily: 'JosefinSans',
                     ),
                   )
@@ -106,7 +121,6 @@ class PostedItem extends StatelessWidget {
             ],
           ),
         ),
-        SizedBox(height: 10.0)
       ],
     );
   }

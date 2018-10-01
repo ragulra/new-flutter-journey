@@ -21,11 +21,13 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final TextEditingController postController = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+      key: _scaffoldKey,
       body: SingleChildScrollView(
         child: Column(
           children: <Widget>[
@@ -43,7 +45,8 @@ class _HomePageState extends State<HomePage> {
                 children: <Widget>[
                   CircleAvatar(
                     radius: 50.0,
-                    backgroundImage: NetworkImage(widget.googleSignIn.currentUser.photoUrl),
+                    backgroundImage:
+                        NetworkImage(widget.googleSignIn.currentUser.photoUrl),
                   ),
                   Column(
                     children: <Widget>[
@@ -65,28 +68,23 @@ class _HomePageState extends State<HomePage> {
               ),
             ),
             SizedBox(height: 15.0),
-            Container(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
-              child: Column(
-                children: <Widget>[
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                  PostedItem(),
-                ],
-              ),
-            ),
+            StreamBuilder(
+              stream: Firestore.instance
+                  .collection('facts')
+                  .where('user', isEqualTo: widget.user.email)
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  _scaffoldKey.currentState.showSnackBar(SnackBar(
+                    content: Text('something wrong occured'),
+                  ));
+                }
+
+                return snapshot.hasData
+                    ? ListItem(document: snapshot.data.documents)
+                    : CircularProgressIndicator();
+              },
+            )
           ],
         ),
       ),
@@ -101,7 +99,26 @@ class _HomePageState extends State<HomePage> {
               builder: (context) {
                 return PostDialog(
                   onFactPosted: () {
-
+                    Firestore.instance
+                        .runTransaction((Transaction transaction) async {
+                      CollectionReference reference =
+                          Firestore.instance.collection('facts');
+                      await reference.add(({
+                        'fact': postController.text,
+                        'user': widget.googleSignIn.currentUser.email,
+                        'name': widget.googleSignIn.currentUser.displayName,
+                        'image': widget.googleSignIn.currentUser.photoUrl,
+                        'likes': 0,
+                        'dislikes': 0,
+                        'comments': 0,
+                        'user_likes': [],
+                        'user_dislikes': [],
+                        'user_comments': []
+                      }));
+                    });
+                    Navigator.of(context).pop();
+                    _scaffoldKey.currentState
+                        .showSnackBar(SnackBar(content: Text('Fact posted!')));
                   },
                   controller: postController,
                 );
@@ -110,6 +127,31 @@ class _HomePageState extends State<HomePage> {
         child: Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+    );
+  }
+}
+
+class ListItem extends StatelessWidget {
+  final List<DocumentSnapshot> document;
+
+  ListItem({@required this.document});
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 4.0),
+      child: Column(
+        children: document.map((data) {
+          return PostedItem(
+            fact: data['fact'],
+            acomments: data['comments'],
+            adislikes: data['dislikes'],
+            alikes: data['likes'],
+            imageUrl: data['image'],
+            name: data['name'],
+          );
+        }).toList(),
+      ),
     );
   }
 }
